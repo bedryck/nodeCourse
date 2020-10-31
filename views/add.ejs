@@ -13,9 +13,30 @@
         <h1>
             Добавить новый курс
         </h1>
-        <a href="/">
-            home page
-        </a>
+
+        <form action="/add" method="POST">
+            <div class="input-field ">
+                <input placeholder="Title" id="title" name="title" type="text" class="validate" required>
+                <label for="title">Назва курсу</label>
+                <span class="helper-text" data-error="Введіть назву"></span>
+            </div>
+
+            <div class="input-field ">
+                <input placeholder="Price" id="price" name="price" type="text" class="validate" required min="1" >
+                <label for="price">Ціна</label>
+                <span class="helper-text" data-error="Введіть ціну"></span>
+            </div>
+
+            <div class="input-field ">
+                <input placeholder="Image" id="img" name="img" type="text" class="validate" required>
+                <label for="img">URL картинки</label>
+                <span class="helper-text" data-error="Введіть url картинки"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primaty">Додати курс</button>
+        </form>
+
+
     </div>
 </body>
 
