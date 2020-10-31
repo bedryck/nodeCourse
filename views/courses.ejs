@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<%- include('./partials/head', {title: 'Курси'}); %>
+<%- include('./partials/head', {
+        title: 'Курси',
+    }); %>
 
 <body>
-    <%- include('./partials/navbar'); %>
+    <%- include('./partials/navbar',{
+        activePage: 'courses'
+    }); %>
+
     <div class="container">
         <h1>
             Курси

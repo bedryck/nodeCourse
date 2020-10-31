@@ -1,6 +1,8 @@
 const express = require('express')
 const path = require('path')
-
+const homeRoutes = require('./routes/home.js')
+const addRoutes = require('./routes/add.js')
+const coursesRoutes = require('./routes/courses.js')
 
 
 const app = express()
@@ -10,23 +12,9 @@ app.set('view engine', 'ejs')
 
 app.use(express.static('public'))
 
-app.get('/', (reg, res) => {
-    res.render('index')
-})
-
-app.get('/add', (reg, res) => {
-    res.render('add')
-})
-
-app.get('/courses', (reg, res) => {
-    res.render('courses')
-})
-
-
-
-
-
-
+app.use("/", homeRoutes)
+app.use("/add", addRoutes)
+app.use("/courses", coursesRoutes)
 
 
 

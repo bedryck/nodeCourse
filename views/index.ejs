@@ -4,7 +4,9 @@
 <%- include('./partials/head', {title:'Головна'}); %>
 
 <body>
-    <%- include('./partials/navbar'); %>
+    <%- include('./partials/navbar',
+       { activePage: 'home'}
+    ); %>
     <div class="container">
         <h1>
             Home page

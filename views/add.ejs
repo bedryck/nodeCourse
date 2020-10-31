@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<%- include('./partials/head', {title: 'Додати курс'}); %>
+<%- include('./partials/head', {
+    title: 'Додати курс',
+    }); %>
 
 <body>
-    <%- include('./partials/navbar'); %>
+    <%- include('./partials/navbar',{
+    activePage: 'add'
+    }); %>
     <div class="container">
         <h1>
             Добавить новый курс
