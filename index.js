@@ -5,19 +5,26 @@ const path = require('path')
 
 const app = express()
 
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
+
+app.use(express.static('public'))
+
 app.get('/', (reg, res) => {
-    res.status(200)
-    res.sendFile(
-        path.join(__dirname, 'views', 'index.html')
-    )
+    res.render('index')
 })
 
-app.get('/about', (reg, res) => {
-    res.status(200)
-    res.sendFile(
-        path.join(__dirname, 'views', 'about.html')
-    )
+app.get('/add', (reg, res) => {
+    res.render('add')
 })
+
+app.get('/courses', (reg, res) => {
+    res.render('courses')
+})
+
+
+
+
 
 
 
