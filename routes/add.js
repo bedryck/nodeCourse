@@ -2,13 +2,13 @@ const { Router } = require('express')
 const Course = require('../models/course')
 const router = Router()
 
-router.get('/', (reg, res) => {
+router.get('/', (req, res) => {
     res.render('add')
 })
 
 
-router.post('/', async (reg, res) => {
-    const { title, price, img } = reg.body
+router.post('/', async (req, res) => {
+    const { title, price, img } = req.body
 
     const course = new Course(title, price, img)
 
