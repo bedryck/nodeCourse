@@ -53,7 +53,6 @@ const server = http.createServer((req, res) => {
         const body = []
 
         req.on('data', data => {
-            console.log('data push')
             body.push(Buffer.from(data))
         })
 

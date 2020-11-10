@@ -12,41 +12,43 @@
     <div class="container">
 
         <h1>Корзина</h1>
-        <% if (courses.length) { %>
+        <div  id="card">
+            <% if (courses.length) { %>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Назва</th>
-                    <th>Кількість</th>
-                    <th>Дія</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% courses.forEach(function(course){ %>
-                <tr>
-                    <td><%= course.title %></td>
-                    <td><%= course.count %></td>
-                    <td>
-                        <button class="btn btn-small">Видалити</button>
-                    </td>
-                </tr>
-                <% }); %>
-            </tbody>
-        </table>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Назва</th>
+                        <th>Кількість</th>
+                        <th>Дія</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% courses.forEach(function(course){ %>
+                    <tr>
+                        <td><%= course.title %></td>
+                        <td><%= course.count %></td>
+                        <td>
+                            <button class="btn btn-small" id="courseRemoove" data-id="<%= course.id %>"
+                                onclick="removeFromCard(event)">Видалити</button>
+                        </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
 
-        <p>
-            <strong>Ціна: </strong>
-            <span class="price"><%= price %></span>
-        </p>
+            <p>
+                <strong>Ціна: </strong>
+                <span class="price"><%= price %></span>
+            </p>
 
-        <% }else{ %>
-        <p>Корзина пуста</p>
-        <% } %>
-
-
+            <% }else{ %>
+            <p>Корзина пуста</p>
+            <% } %>
+        </div>
     </div>
 </body>
+<script type="text/javascript" src="/removeCard.js"></script>
 <script type="text/javascript" src="/price.js"></script>
 <%- include('./partials/footer'); %>
 
