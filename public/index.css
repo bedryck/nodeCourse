@@ -11,3 +11,9 @@
     width: 100%;
     align-items: center;
 }
+
+.actions {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('./partials/head', {
+        title: 'Корзина',
+    }); %>
+
+<body>
+    <%- include('./partials/navbar',{
+        activePage: 'card'
+        }); %>
+    <div class="container">
+
+        <h1>Корзина</h1>
+        <% if (courses.length) { %>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Назва</th>
+                    <th>Кількість</th>
+                    <th>Дія</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% courses.forEach(function(course){ %>
+                <tr>
+                    <td><%= course.title %></td>
+                    <td><%= course.count %></td>
+                    <td>
+                        <button class="btn btn-small">Видалити</button>
+                    </td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+
+        <p>
+            <strong>Ціна: </strong>
+            <span class="price"><%= price %></span>
+        </p>
+
+        <% }else{ %>
+        <p>Корзина пуста</p>
+        <% } %>
+
+
+    </div>
+</body>
+<script type="text/javascript" src="/price.js"></script>
+<%- include('./partials/footer'); %>
+
+
+</html>

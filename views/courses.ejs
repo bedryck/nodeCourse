@@ -27,9 +27,15 @@
                         <span class="card-title"><%= course.title %></span>
                         <p class="price"><%= course.price %></p>
                     </div>
-                    <div class="card-action">
+                    <div class="card-action actions">
                         <a href="/courses/<%= course.id %>">Відкрити курс</a>
                         <a href="/courses/<%= course.id %>/edit?allow=true">Редагувати курс</a>
+                        <form action="/card/add" method="POST">
+                            <input type="hidden" name="id" value=<%= course.id %>>
+                            <button type="submit" class="btn btn-primary">
+                                Купити
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@ const path = require('path')
 const homeRoutes = require('./routes/home.js')
 const addRoutes = require('./routes/add.js')
 const coursesRoutes = require('./routes/courses.js')
+const cardRoutes = require('./routes/card.js')
 
 
 const app = express()
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use("/", homeRoutes)
 app.use("/add", addRoutes)
 app.use("/courses", coursesRoutes)
+app.use("/card", cardRoutes)
 
 
 
