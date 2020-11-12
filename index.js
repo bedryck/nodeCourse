@@ -4,6 +4,9 @@ const homeRoutes = require('./routes/home.js')
 const addRoutes = require('./routes/add.js')
 const coursesRoutes = require('./routes/courses.js')
 const cardRoutes = require('./routes/card.js')
+const mongoose = require('mongoose');
+
+
 
 
 const app = express()
@@ -24,6 +27,27 @@ app.use("/card", cardRoutes)
 
 
 const PORT = process.env.PORT || 3000
-app.listen(PORT, () => {
-    console.log('server started:', PORT)
-})
+
+
+async function start() {
+    try {
+        const password = "OZykR0im2W78NsXY"
+        const dbName = "nodeCourse"
+        const urlDb = `mongodb+srv://roman:${password}@cluster0.jxmkb.mongodb.net/${dbName}?retryWrites=true&w=majority`
+        await mongoose.connect(urlDb, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useFindAndModify: false
+        });
+        app.listen(PORT, () => {
+            console.log('server started:', PORT)
+        })
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+start()
+
+
