@@ -10,12 +10,12 @@ router.get('/', (req, res) => {
 router.post('/', async (req, res) => {
 
     try {
-
-        const { title, price, img } = req.body
+        const { title, price, img, } = req.body
         const course = new Course({
             title,
             price,
-            img
+            img,
+            userId: req.user // Описали як Schema.Types.ObjectId
         })
         await course.save()
         res.redirect('/courses')
