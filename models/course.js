@@ -19,4 +19,10 @@ const course = new Schema({
     }
 })
 
+course.method('toClient', function () {
+    const course = this.tpObject()
+    course.id = course._id
+    return course
+})
+
 module.exports = model('Course', course)

@@ -11,7 +11,7 @@ const user = new Schema({
         required: true
     },
     cart: {
-        items:[
+        items: [
             {
                 count: {
                     type: Number,
@@ -27,5 +27,35 @@ const user = new Schema({
         ]
     }
 })
+
+user.methods.addToCart = function (course) {
+    const items = [...this.cart.items]
+    const index = items.findIndex(item => item.courseId.toString() === course._id.toString())
+
+    if (index >= 0) {
+        items[index].count = items[index].count + 1
+    } else {
+        items.push({
+            courseId: course._id,
+            count: 1
+        })
+    }
+    this.cart = { items }
+    return this.save()
+}
+
+user.methods.removeFromCart = function (id) {
+    let items = [...this.cart.items]
+    const index = items.findIndex(item => item.courseId.toString() === id.toString())
+
+    if (items[index].count === 1) {
+        items = items.filter(c => c.courseId.toString() !== id.toString())
+    } else {
+        items[index].count = items[index].count - 1
+
+    }
+    this.cart = { items }
+    return this.save()
+}
 
 module.exports = model('User', user)
