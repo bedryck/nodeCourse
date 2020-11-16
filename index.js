@@ -4,6 +4,7 @@ const homeRoutes = require('./routes/home.js')
 const addRoutes = require('./routes/add.js')
 const coursesRoutes = require('./routes/courses.js')
 const cardRoutes = require('./routes/card.js')
+const orderRoutes = require('./routes/orders.js')
 const mongoose = require('mongoose');
 const User = require('./models/user')
 
@@ -35,6 +36,7 @@ app.use("/", homeRoutes)
 app.use("/add", addRoutes)
 app.use("/courses", coursesRoutes)
 app.use("/card", cardRoutes)
+app.use("/orders", orderRoutes)
 
 
 const PORT = process.env.PORT || 3000

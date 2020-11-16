@@ -12,7 +12,7 @@
     <div class="container">
 
         <h1>Корзина</h1>
-        <div  id="card">
+        <div id="card">
             <% if (courses.length) { %>
 
             <table>
@@ -41,6 +41,12 @@
                 <strong>Ціна: </strong>
                 <span class="price"><%= price %></span>
             </p>
+
+            <form action="/orders" method="POST">
+                <button type="submit" class="btn">
+                    Зробити замовлення
+                </button>
+            </form>
 
             <% }else{ %>
             <p>Корзина пуста</p>
