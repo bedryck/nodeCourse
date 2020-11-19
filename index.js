@@ -10,7 +10,8 @@ const cardRoutes = require('./routes/card.js')
 const orderRoutes = require('./routes/orders.js')
 const authRoutes = require('./routes/auth.js')
 const mongoose = require('mongoose');
-var varMiddleware = require('./middleware/variables')
+const varMiddleware = require('./middleware/variables')
+const userMiddleware = require('./middleware/user')
 
 // const User = require('./models/user')
 
@@ -42,6 +43,7 @@ app.use(session({
 }))
 
 app.use(varMiddleware)
+app.use(userMiddleware)
 
 app.use(express.urlencoded({ extended: true }))
 
