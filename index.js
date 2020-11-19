@@ -1,5 +1,8 @@
 const express = require('express')
 const path = require('path')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')(session);
+
 const homeRoutes = require('./routes/home.js')
 const addRoutes = require('./routes/add.js')
 const coursesRoutes = require('./routes/courses.js')
@@ -7,29 +10,38 @@ const cardRoutes = require('./routes/card.js')
 const orderRoutes = require('./routes/orders.js')
 const authRoutes = require('./routes/auth.js')
 const mongoose = require('mongoose');
-const User = require('./models/user')
+var varMiddleware = require('./middleware/variables')
 
+// const User = require('./models/user')
 
+const password = "OZykR0im2W78NsXY"
+const dbName = "nodeCourse"
+const urlDb = `mongodb+srv://roman:${password}@cluster0.jxmkb.mongodb.net/${dbName}?retryWrites=true&w=majority`
+
+const store = new MongoStore({
+    collection: 'sessions',
+    url: urlDb,
+    stringify: false
+})
 
 const app = express()
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
-app.use(async (req, res, next) => {
 
-    try {
-        const user = await User.findById("5fb0711a494aab3b4c82634a")
-        req.user = user
-        next()
-    } catch (error) {
-        console.log(error)
-    }
-
-})
 
 
 app.use(express.static(path.join(__dirname, "public")))
+
+app.use(session({
+    secret: 'some secret value',
+    resave: false,
+    saveUninitialized: false,
+    store
+}))
+
+app.use(varMiddleware)
 
 app.use(express.urlencoded({ extended: true }))
 
@@ -46,23 +58,21 @@ const PORT = process.env.PORT || 3000
 
 async function start() {
     try {
-        const password = "OZykR0im2W78NsXY"
-        const dbName = "nodeCourse"
-        const urlDb = `mongodb+srv://roman:${password}@cluster0.jxmkb.mongodb.net/${dbName}?retryWrites=true&w=majority`
+
         await mongoose.connect(urlDb, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: false
         });
-        const candidate = await User.findOne()
-        if (!candidate) {
-            const user = new User({
-                email: 'romariooo27@gmail.com',
-                name: 'Roman',
-                cart: { items: [] }
-            })
-            await user.save()
-        }
+        // const candidate = await User.findOne()
+        // if (!candidate) {
+        //     const user = new User({
+        //         email: 'romariooo27@gmail.com',
+        //         name: 'Roman',
+        //         cart: { items: [] }
+        //     })
+        //     await user.save()
+        // }
 
         app.listen(PORT, () => {
             console.log('server started:', PORT)

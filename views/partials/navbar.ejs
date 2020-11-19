@@ -8,6 +8,7 @@
             <li class="<%=  activePage === 'courses' ? 'active' : '' %>">
                 <a href="/courses">Курси</a>
             </li>
+            <% if (isAuth) { %>
             <li class="<%=  activePage === 'add' ? 'active' : '' %>">
                 <a href="/add">Додати курс</a>
             </li>
@@ -17,9 +18,14 @@
             <li class="<%=  activePage === 'orders' ? 'active' : '' %>">
                 <a href="/orders">Мої замовлення</a>
             </li>
+            <li>
+                <a href="/auth/logout">Вийти</a>
+            </li>
+            <% }else{ %>
             <li class="<%=  activePage === 'login' ? 'active' : '' %>">
                 <a href="/auth/login#login">Увійти</a>
             </li>
+            <% }%>
         </ul>
     </div>
 </nav>

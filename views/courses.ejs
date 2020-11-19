@@ -29,6 +29,7 @@
                     </div>
                     <div class="card-action actions">
                         <a href="/courses/<%= course.id %>">Відкрити курс</a>
+                        <% if (isAuth) { %>
                         <a href="/courses/<%= course.id %>/edit?allow=true">Редагувати курс</a>
                         <form action="/card/add" method="POST">
                             <input type="hidden" name="id" value=<%= course.id %>>
@@ -36,6 +37,8 @@
                                 Купити
                             </button>
                         </form>
+                        <% } %>
+
                     </div>
                 </div>
             </div>
