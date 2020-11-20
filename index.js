@@ -11,10 +11,10 @@ const orderRoutes = require('./routes/orders.js')
 const authRoutes = require('./routes/auth.js')
 const mongoose = require('mongoose');
 const csrf = require('csurf')
+const flash = require('connect-flash')
 const varMiddleware = require('./middleware/variables')
 const userMiddleware = require('./middleware/user')
 
-// const User = require('./models/user')
 
 const password = "OZykR0im2W78NsXY"
 const dbName = "nodeCourse"
@@ -45,6 +45,7 @@ app.use(session({
 }))
 
 app.use(csrf())
+app.use(flash())
 
 
 app.use(varMiddleware)

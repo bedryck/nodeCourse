@@ -5,9 +5,11 @@ const router = Router()
 
 router.get('/login', (req, res) => {
 
-    console.log(res.locals.csrf)
 
-    res.render('auth/login')
+    res.render('auth/login', {
+        loginError: req.flash('loginError'),
+        registerError: req.flash('registerError')
+    })
 })
 
 
@@ -39,9 +41,11 @@ router.post('/login', async (req, res) => {
                 res.redirect('/')
             })
         } else {
+            req.flash('loginError', "Не вірний пароль")
             res.redirect('/auth/login#login')
         }
     } else {
+        req.flash('loginError', "Такого користувача не існує")
         res.redirect('/auth/login#login')
     }
 
@@ -54,6 +58,7 @@ router.post('/register', async (req, res) => {
 
         const candidate = await User.findOne({ email })
         if (candidate) {
+            req.flash('registerError', "Користувач з таким email уже існує")
             res.redirect('/auth/login#register')
         } else {
             const hashPassword = await bcrypt.hash(password, 10)

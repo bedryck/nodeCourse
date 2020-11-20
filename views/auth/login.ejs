@@ -20,6 +20,9 @@
                     </ul>
                 </div>
                 <div id="login" class="col s6 offset-s3">
+                    <% if (loginError.length) { %>
+                    <p class="alert"><%= loginError %> </p>
+                    <% } %>
                     <h4>Увійти в магазин</h4>
                     <form action="/auth/login" method="POST">
                         <div class="input-field ">
@@ -41,6 +44,9 @@
                     </form>
                 </div>
                 <div id="register" class="col s6 offset-s3">
+                    <% if (registerError.length) { %>
+                    <p class="alert"><%= registerError %> </p>
+                    <% } %>
                     <h4>Створити аккаунт</h4>
                     <form action="/auth/register" method="POST">
                         <div class="input-field ">
