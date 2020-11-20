@@ -22,7 +22,7 @@
             </div>
 
             <div class="input-field ">
-                <input placeholder="Price" id="price" name="price" type="text" class="validate" required min="1" >
+                <input placeholder="Price" id="price" name="price" type="text" class="validate" required min="1">
                 <label for="price">Ціна</label>
                 <span class="helper-text" data-error="Введіть ціну"></span>
             </div>
@@ -32,6 +32,7 @@
                 <label for="img">URL картинки</label>
                 <span class="helper-text" data-error="Введіть url картинки"></span>
             </div>
+            <input type="hidden" name="_csrf" value="<%= csrf %>">
 
             <button type="submit" class="btn btn-primaty">Додати курс</button>
         </form>

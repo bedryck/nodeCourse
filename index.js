@@ -10,6 +10,7 @@ const cardRoutes = require('./routes/card.js')
 const orderRoutes = require('./routes/orders.js')
 const authRoutes = require('./routes/auth.js')
 const mongoose = require('mongoose');
+const csrf = require('csurf')
 const varMiddleware = require('./middleware/variables')
 const userMiddleware = require('./middleware/user')
 
@@ -34,6 +35,7 @@ app.set('view engine', 'ejs')
 
 
 app.use(express.static(path.join(__dirname, "public")))
+app.use(express.urlencoded({ extended: true }))
 
 app.use(session({
     secret: 'some secret value',
@@ -42,10 +44,13 @@ app.use(session({
     store
 }))
 
+app.use(csrf())
+
+
 app.use(varMiddleware)
 app.use(userMiddleware)
 
-app.use(express.urlencoded({ extended: true }))
+
 
 app.use("/", homeRoutes)
 app.use("/add", addRoutes)

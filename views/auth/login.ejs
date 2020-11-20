@@ -35,6 +35,8 @@
                             <span class="helper-text" data-error="Введіть пароль"></span>
                         </div>
 
+                        <input type="hidden" name="_csrf" value="<%= csrf %>">
+
                         <button type="submit" class="btn btn-primaty">Увійти</button>
                     </form>
                 </div>
@@ -58,6 +60,7 @@
                             <label for="rpassword">Пароль</label>
                             <span class="helper-text" data-error="Введіть пароль"></span>
                         </div>
+                        <input type="hidden" name="_csrf" value="<%= csrf %>">
 
                         <button type="submit" class="btn btn-primaty">ЗАреєструватись</button>
                     </form>

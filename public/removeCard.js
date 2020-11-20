@@ -2,8 +2,12 @@
 const cardDiv = document.getElementById('card')
 function removeFromCard(e) {
     const id = e.target.dataset.id
+    const CSRF = e.target.dataset.csrf
     fetch('/card/remove/' + id, {
-        method: 'delete'
+        method: 'delete',
+        headers: {
+            'CSRF-Token': CSRF
+        }
     })
         .then(res => res.json())
         .then(card => {
