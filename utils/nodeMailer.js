@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-
+const keys = require('../keys')
 
 
 module.exports = async function (mailOptions) {
@@ -9,8 +9,8 @@ module.exports = async function (mailOptions) {
         port: 2525,
         secure: true,
         auth: {
-            user: 'roma_kovalbest@ukr.net',
-            pass: 'ClwQJLETMz5Pq8XS'
+            user: keys.EMAIL_FROM,
+            pass: keys.EMAIL_PASS
         }
     });
 
