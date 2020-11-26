@@ -14,15 +14,12 @@ const csrf = require('csurf')
 const flash = require('connect-flash')
 const varMiddleware = require('./middleware/variables')
 const userMiddleware = require('./middleware/user')
+const keys = require('./keys')
 
-
-const password = "OZykR0im2W78NsXY"
-const dbName = "nodeCourse"
-const urlDb = `mongodb+srv://roman:${password}@cluster0.jxmkb.mongodb.net/${dbName}?retryWrites=true&w=majority`
 
 const store = new MongoStore({
     collection: 'sessions',
-    url: urlDb,
+    url: keys.urlDb,
     stringify: false
 })
 
@@ -38,7 +35,7 @@ app.use(express.static(path.join(__dirname, "public")))
 app.use(express.urlencoded({ extended: true }))
 
 app.use(session({
-    secret: 'some secret value',
+    secret: keys.sessionSecret,
     resave: false,
     saveUninitialized: false,
     store
@@ -67,7 +64,7 @@ const PORT = process.env.PORT || 3000
 async function start() {
     try {
 
-        await mongoose.connect(urlDb, {
+        await mongoose.connect(keys.urlDb, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: false
