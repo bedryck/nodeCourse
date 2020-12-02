@@ -44,7 +44,7 @@ exports.loginValidators = [
         console.log(error);
       }
     })
-    .custom(async (value, {req}) => {
+    .custom(async (value, { req }) => {
       try {
         const candidate = await User.findOne({ email: value });
         const areSame = await bcrypt.compare(req.body.password, candidate.password);
@@ -55,10 +55,18 @@ exports.loginValidators = [
         console.log(error);
       }
     })
-
     .normalizeEmail(),
   body("password", "Пароль повинен бути мінімум 6 символів")
     .isLength({ min: 4, max: 56 })
     .isAlphanumeric().trim(),
+
+];
+
+
+exports.courseValidator = [
+  body("title", "Нащва повина бути мінімум 6 символів").isLength({ min: 6, max: 56 }).trim(),
+  body("price").isNumeric().withMessage('Введіть валідну ціну'),
+  body("img").isURL().withMessage('Введіть валідний url')
+
 
 ];

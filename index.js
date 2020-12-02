@@ -14,6 +14,7 @@ const csrf = require('csurf')
 const flash = require('connect-flash')
 const varMiddleware = require('./middleware/variables')
 const userMiddleware = require('./middleware/user')
+const errorMiddleware = require('./middleware/error')
 const keys = require('./keys')
 
 
@@ -56,6 +57,8 @@ app.use("/courses", coursesRoutes)
 app.use("/card", cardRoutes)
 app.use("/orders", orderRoutes)
 app.use("/auth", authRoutes)
+
+app.use(errorMiddleware)
 
 
 const PORT = process.env.PORT || 3000
