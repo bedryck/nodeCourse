@@ -56,7 +56,7 @@
                     <h4>Створити аккаунт</h4>
                     <form action="/auth/register" method="POST">
                         <div class="input-field ">
-                            <input placeholder="Email" id="remail" name="email" type="text" class="validate" required>
+                            <input placeholder="Email" id="remail" name="email" type="email" class="validate" required>
                             <label for="remail">Email</label>
                             <span class="helper-text" data-error="Введіть email"></span>
                         </div>
@@ -71,6 +71,13 @@
                                 required>
                             <label for="rpassword">Пароль</label>
                             <span class="helper-text" data-error="Введіть пароль"></span>
+                        </div>
+
+                        <div class="input-field ">
+                            <input placeholder="Повторіть пароль" id="confirm" name="confirm" type="password"
+                                class="validate" required>
+                            <label for="confirm">Повторіть пароль</label>
+                            <span class="helper-text" data-error="Введіть пароль ще раз"></span>
                         </div>
                         <input type="hidden" name="_csrf" value="<%= csrf %>">
 
