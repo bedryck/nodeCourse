@@ -2,7 +2,7 @@ const { Router } = require("express");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const { validationResult } = require("express-validator");
-const { registerValidators } = require("../utils/validators");
+const { registerValidators, loginValidators } = require("../utils/validators");
 const User = require("../models/user");
 const router = Router();
 const nodemailer = require("../utils/nodeMailer");
@@ -22,29 +22,26 @@ router.get("/logout", (req, res) => {
   });
 });
 
-router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+router.post("/login", loginValidators, async (req, res) => {
+  const { email, } = req.body;
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    req.flash("loginError", errors.array()[0].msg);
+    return res.status(422).redirect("/auth/login#login");
+  }
+
   const candidate = await User.findOne({ email });
 
-  if (candidate) {
-    const areSame = await bcrypt.compare(password, candidate.password);
-    if (areSame) {
-      req.session.user = candidate;
-      req.session.isAuthenticated = true;
-      req.session.save((err) => {
-        if (err) {
-          throw err;
-        }
-        res.redirect("/");
-      });
-    } else {
-      req.flash("loginError", "Не вірний пароль");
-      res.redirect("/auth/login#login");
+  req.session.user = candidate;
+  req.session.isAuthenticated = true;
+  req.session.save((err) => {
+    if (err) {
+      throw err;
     }
-  } else {
-    req.flash("loginError", "Такого користувача не існує");
-    res.redirect("/auth/login#login");
-  }
+    res.redirect("/");
+  });
+
 });
 
 router.post("/register", registerValidators, async (req, res) => {
