@@ -25,27 +25,29 @@ router.get("/", auth, (req, res) => {
         return res.render("profile", {
           user: req.user.toObject(),
           image: buf.toString("base64"),
+          errors: req.flash("errors"),
         });
       });
     } else {
       return res.render("profile", {
         user: req.user.toObject(),
         image: null,
+        errors: req.flash("errors"),
       });
     }
   } catch (error) {
     return res.render("profile", {
       user: req.user.toObject(),
       image: null,
+      errors: req.flash("errors"),
     });
   }
 });
 
 router.post("/", auth, (req, res, next) => {
-
   const form = formidable({ multiples: true });
 
-  form.parse(req, (err, fields, files) => {
+  form.parse(req, async (err, fields, files) => {
     if (err) {
       next(err);
       return;
@@ -53,31 +55,38 @@ router.post("/", auth, (req, res, next) => {
 
     const { avatar } = files;
 
-    if (avatar.size > 100000) {
+    if (avatar.size) {
+      if (avatar.size > 100000) {
+        req.flash("errors", "Розмір аватара за великий");
+        return res.redirect("/profile");
+      }
+
+      const conn = mongoose.connection;
+
+      const gridFSBucket = new mongoose.mongo.GridFSBucket(conn.db, {
+        bucketName: "photos",
+      });
+
+      const writeStream = gridFSBucket.openUploadStream(avatar.name);
+      let id = writeStream.id;
+
+      fs.createReadStream(avatar.path)
+        .pipe(writeStream)
+        .on("error", function (error) {
+          console.log(error);
+        })
+        .on("finish", async function () {
+          console.log("done! id:", id);
+          req.user.imgId = id;
+
+          await req.user.save();
+          return res.redirect("/profile");
+        });
+    } else {
+      req.user.name = fields.name;
+      await req.user.save();
       return res.redirect("/profile");
     }
-
-    const conn = mongoose.connection;
-
-    const gridFSBucket = new mongoose.mongo.GridFSBucket(conn.db, {
-      bucketName: "photos",
-    });
-
-    const writeStream = gridFSBucket.openUploadStream(avatar.name);
-    let id = writeStream.id;
-
-    fs.createReadStream(avatar.path)
-      .pipe(writeStream)
-      .on("error", function (error) {
-        console.log(error);
-      })
-      .on("finish", async function () {
-        console.log("done! id:", id);
-        req.user.imgId = id;
-
-        await req.user.save();
-        res.redirect("/profile");
-      });
   });
 });
 
