@@ -9,6 +9,9 @@
                 <a href="/courses">Курси</a>
             </li>
             <% if (isAuth) { %>
+            <li class="<%=  activePage === 'profile' ? 'active' : '' %>">
+                <a href="/profile">Профіль</a>
+            </li>
             <li class="<%=  activePage === 'add' ? 'active' : '' %>">
                 <a href="/add">Додати курс</a>
             </li>
