@@ -30,7 +30,9 @@ const user = new Schema({
       },
     ],
   },
-  img: { data: Buffer, contentType: String },
+  imgId: {
+    type: Schema.Types.ObjectId,
+  },
 });
 
 user.methods.addToCart = function (course) {

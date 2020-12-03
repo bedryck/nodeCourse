@@ -61,20 +61,44 @@ const PORT = process.env.PORT || 3000;
 
 async function start() {
   try {
+    const conn = mongoose.connection;
+    conn
+      .once("open", () => {
+        console.log("connected to MongoDB!");
+        // const gridFSBucket = new mongoose.mongo.GridFSBucket(conn.db, {
+        //   bucketName: "photos",
+        // });
+
+        // const id = mongoose.Types.ObjectId("5fc8ac622bd5f32b8c29b883");
+
+        // let downloadStream = gridFSBucket.openDownloadStream(id);
+
+        // downloadStream.on("data", (chunk) => {
+        //   const buf = Buffer.from(chunk);
+        //   console.log(buf.toString());
+          
+        // });
+        
+        // const writeStream = gridFSBucket.openUploadStream("myNotes2.txt");
+        // let id = writeStream.id;
+
+        // fs.createReadStream("./refs/notes/myNotes2.txt")
+        //   .pipe(writeStream)
+        //   .on("error", function (error) {
+        //     console.log(error);
+        //   })
+        //   .on("finish", function () {
+        //     console.log("done! id:", id);
+        //     process.exit(0);
+        //   });
+      })
+      .on("error", (err) => console.error("connecting to MongoDB " + err));
+
     await mongoose.connect(keys.urlDb, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
     });
-    // const candidate = await User.findOne()
-    // if (!candidate) {
-    //     const user = new User({
-    //         email: 'romariooo27@gmail.com',
-    //         name: 'Roman',
-    //         cart: { items: [] }
-    //     })
-    //     await user.save()
-    // }
 
     app.listen(PORT, () => {
       console.log("server started:", PORT);
